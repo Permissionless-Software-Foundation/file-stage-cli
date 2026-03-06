@@ -1,5 +1,5 @@
 /*
-Trigger a pin upload request.
+  Trigger a pin upload request.
 */
 
 // Global npm libraries
