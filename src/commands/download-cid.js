@@ -1,5 +1,7 @@
 /*
-  Get information about a file in IPFS
+  Download an arbitrary file from the PSFFPP network, given its CID. This will find
+  files that exist on the network and have not necessarily been pinned. The user must
+  supply a filename as the CID does not encode that information.
 */
 
 // Global npm libraries

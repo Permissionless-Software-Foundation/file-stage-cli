@@ -1,5 +1,5 @@
 /*
-  Get information about a file in IPFS
+  Download a file pinned to the PSFFPP network, given its CID.
 */
 
 // Global npm libraries
