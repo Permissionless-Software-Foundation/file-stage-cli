@@ -208,6 +208,16 @@ Download a file from IPFS to the `files/` directory by specifying both the CID a
 - Use `-f` to specify the filename to save the file as (required).
 
 
+#### File Upload
+
+Upload a file from the `files/` directory to an instance of [ipfs-file-stager](https://github.com/Permissionless-Software-Foundation/ipfs-file-stager) (staging on the IPFS node). The server responds with a CID when the upload succeeds.
+
+- `node file-stage.js file-upload -f myfile.json`
+
+##### Arguments
+- Use `-f` to specify the file name in the `files/` directory (required).
+
+
 ### Pin Commands
 
 

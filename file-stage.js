@@ -29,6 +29,7 @@ import PinRenew from './src/commands/pin-renew.js'
 import UnprocessedPins from './src/commands/unprocessed-pins.js'
 import IPFSRepin from './src/commands/reprocess.js'
 import IPFSPinUpload from './src/commands/pin-upload.js'
+import IPFSFileUpload from './src/commands/file-upload.js'
 import PinClaimFile from './src/commands/pin-claim-file.js'
 import ConsumerTest from './src/commands/consumer-test.js'
 
@@ -56,6 +57,7 @@ const pinRenew = new PinRenew()
 const unprocessedPins = new UnprocessedPins()
 const ipfsRepin = new IPFSRepin()
 const ipfsPinUpload = new IPFSPinUpload()
+const ipfsFileUpload = new IPFSFileUpload()
 const pinClaimFile = new PinClaimFile()
 const consumerTest = new ConsumerTest()
 
@@ -149,6 +151,11 @@ program.command('download-cid')
   .option('-c, --cid <string>', 'CID of the file to download')
   .option('-f, --filename <string>', 'File Name (required)')
   .action(downloadCid.run)
+
+program.command('file-upload')
+  .description('Upload a file from the files/ directory to ipfs-file-stager for staging')
+  .option('-f, --filename <string>', 'File Name (required)')
+  .action(ipfsFileUpload.run)
 
 program.command('wallet-service')
   .description('Get information about the wallet service providers')
