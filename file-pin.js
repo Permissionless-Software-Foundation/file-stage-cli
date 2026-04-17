@@ -145,7 +145,7 @@ program.command('download-file')
   .action(downloadFile.run)
 
 program.command('download-cid')
-  .description('Download a file from IPFS to the files/ directory. This is for files that have a valid Pin Claim.')
+  .description('Download arbitrary CID from IPFS to the files/ directory. Must provide file name.')
   .option('-c, --cid <string>', 'CID of the file to download')
   .option('-f, --filename <string>', 'File Name (required)')
   .action(downloadCid.run)
