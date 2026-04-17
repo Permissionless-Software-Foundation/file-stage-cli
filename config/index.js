@@ -19,7 +19,7 @@ const config = {
   interface: process.env.INTERFACE || 'consumer-api',
 
   // The URL for the IPFS pin service.
-  pinService: process.env.PIN_SERVICE || 'http://localhost:5031'
+  stageService: process.env.STAGE_SERVICE || 'https://file-stage.fullstack.cash'
 }
 
 export default config
