@@ -41,7 +41,7 @@ class PinStatus {
   // Get information about a file in IPFS.
   async getInfo (flags) {
     try {
-      const response = await this.axios.get(`${this.config.pinService}/ipfs/pin-status/${flags.cid}`)
+      const response = await this.axios.get(`${this.config.walletUrl}/ipfs/file-info/${flags.cid}`)
       // console.log('response: ', response)
 
       const { data } = response
