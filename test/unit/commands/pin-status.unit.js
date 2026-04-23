@@ -62,6 +62,24 @@ describe('#pin-status', () => {
       assert.equal(result, true)
     })
 
+    it('should warn when the pin claim has expired', async () => {
+      const logSpy = sandbox.stub(console, 'log')
+      sandbox.stub(uut, 'getInfo').resolves({
+        cid: 'bafybeied3zdwdiro7fqytyha2yfband4lwcrtozmf6shynylt3kexh26dq',
+        expirationTime: new Date(Date.now() - 86400000).toISOString()
+      })
+
+      const flags = {
+        cid: 'bafybeied3zdwdiro7fqytyha2yfband4lwcrtozmf6shynylt3kexh26dq'
+      }
+      const result = await uut.run(flags)
+
+      assert.equal(result, true)
+      assert.isTrue(
+        logSpy.calledWith('⚠️  WARNING: The pin claim has expired!')
+      )
+    })
+
     it('should handle an error', async () => {
       sandbox.stub(uut, 'getInfo').throws(new Error('test error'))
       const flags = {
@@ -109,6 +127,38 @@ describe('#pin-status', () => {
         cid: 'bafybeied3zdwdiro7fqytyha2yfband4lwcrtozmf6shynylt3kexh26dq'
       }
       const result = await uut.getInfo(flags)
+
+      assert.notProperty(result, 'claimTime')
+      assert.notProperty(result, 'expirationTime')
+    })
+
+    it('should not add claimTime when claimTxDetails.time is null', async () => {
+      sandbox.stub(uut.axios, 'get').resolves({
+        data: {
+          cid: 'bafybeied3zdwdiro7fqytyha2yfband4lwcrtozmf6shynylt3kexh26dq',
+          claimTxDetails: { time: null }
+        }
+      })
+
+      const result = await uut.getInfo({
+        cid: 'bafybeied3zdwdiro7fqytyha2yfband4lwcrtozmf6shynylt3kexh26dq'
+      })
+
+      assert.notProperty(result, 'claimTime')
+      assert.notProperty(result, 'expirationTime')
+    })
+
+    it('should not add claimTime when claimTxDetails.time is undefined', async () => {
+      sandbox.stub(uut.axios, 'get').resolves({
+        data: {
+          cid: 'bafybeied3zdwdiro7fqytyha2yfband4lwcrtozmf6shynylt3kexh26dq',
+          claimTxDetails: {}
+        }
+      })
+
+      const result = await uut.getInfo({
+        cid: 'bafybeied3zdwdiro7fqytyha2yfband4lwcrtozmf6shynylt3kexh26dq'
+      })
 
       assert.notProperty(result, 'claimTime')
       assert.notProperty(result, 'expirationTime')

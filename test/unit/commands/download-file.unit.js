@@ -82,8 +82,10 @@ describe('#download-file', () => {
     it('should return file info', async () => {
       sandbox.stub(uut.axios, 'get').resolves({
         data: {
-          cid: 'bafybeied3zdwdiro7fqytyha2yfband4lwcrtozmf6shynylt3kexh26dq',
-          filename: 'test-file.json'
+          fileMetadata: {
+            cid: 'bafybeied3zdwdiro7fqytyha2yfband4lwcrtozmf6shynylt3kexh26dq',
+            filename: 'test-file.json'
+          }
         }
       })
 
@@ -98,7 +100,7 @@ describe('#download-file', () => {
 
     it('should throw error if CID not found', async () => {
       try {
-        sandbox.stub(uut.axios, 'get').resolves({ data: null })
+        sandbox.stub(uut.axios, 'get').resolves({ data: { fileMetadata: null } })
 
         await uut.getInfo({ cid: 'test' })
 
@@ -110,7 +112,9 @@ describe('#download-file', () => {
 
     it('should throw error if info has no cid', async () => {
       try {
-        sandbox.stub(uut.axios, 'get').resolves({ data: { filename: 'test.json' } })
+        sandbox.stub(uut.axios, 'get').resolves({
+          data: { fileMetadata: { filename: 'test.json' } }
+        })
 
         await uut.getInfo({ cid: 'test' })
 
